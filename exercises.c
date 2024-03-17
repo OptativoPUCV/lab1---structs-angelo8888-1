@@ -59,7 +59,7 @@ int *filterEvenNumbers(int arr[], int size, int *newSize) {
     int j = 0;
     for (int i = 0; i < size; i++) {
         if (arr[i] % 2 == 0) {
-            result[j] = arr[i];
+            evenNumbers[j] = arr[i];
             j++;
         }
     }
