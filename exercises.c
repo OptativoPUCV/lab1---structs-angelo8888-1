@@ -74,8 +74,34 @@ Descripción: Escribe una función que tome dos arreglos
 ordenados de menor a mayor y sus tamaños, y luego fusione estos dos
 arreglos en un tercer arreglo también ordenado de menor a mayor.
 */
-void mergeSortedArrays(int arr1[], int size1, int arr2[], int size2,
-                       int result[]) {}
+void mergeSortedArrays(int arr1[], int size1, int arr2[], int size2, int result[]) {
+    int i = 0, j = 0, k = 0;
+
+    // Comparar elementos de arr1 y arr2 e insertar el menor en result
+    while (i < size1 && j < size2) {
+        if (arr1[i] <= arr2[j]) {
+            result[k] = arr1[i];
+            i++;
+        }
+        else {
+            result[k] = arr2[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < size1) {
+        result[k] = arr1[i];
+        i++;
+        k++;
+    }
+  
+    while (j < size2) {
+        result[k] = arr2[j];
+        j++;
+        k++;
+    }
+}
 
 /*
 Ejercicio 5: Comprobación de Ordenación
@@ -83,7 +109,35 @@ Descripción: Escribe una función que tome un arreglo y su tamaño,
 y luego devuelva 1 si el arreglo está ordenado en orden ascendente,
   0 si no está ordenado, y -1 si está ordenado en orden descendente.
 */
-int checkSorted(int arr[], int size) { return -2; }
+
+int checkSorted(int arr[], int size) {
+    int ascending = 1;
+    int descending = 1;
+  
+    //comprobar si es ascendente
+    for (int i = 0; i < size - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            ascending = 0;
+            break;
+        }
+    }
+
+    // Comprobar si es descendente
+    for (int i = 0; i < size - 1; i++) {
+        if (arr[i] < arr[i + 1]) {
+            descending = 0;
+            break;
+        }
+    }
+
+    if (ascending)
+        return 1;
+    else if (descending)
+        return -1;
+    else
+        return 0;
+}
+
 
 /*
 Ejercicio 6: Información de una Biblioteca
@@ -104,8 +158,17 @@ typedef struct {
   int anioPublicacion;
 } Libro;
 
-void inicializarLibro(Libro *libro, const char *titulo, const char *nombreAutor,
-                      int anioNacimiento, int anioPublicacion) {}
+void inicializarLibro(Libro *libro, const char *titulo, const char *nombreAutor, int anioNacimiento, int anioPublicacion) {
+    strncpy(libro->titulo, titulo, sizeof(libro->titulo));
+    libro->titulo[sizeof(libro->titulo) - 1] = '\0';
+
+    strncpy(libro->autor.nombre, nombreAutor, sizeof(libro->autor.nombre));
+    libro->autor.nombre[sizeof(libro->autor.nombre) - 1] = '\0';
+
+    libro->anioPublicacion = anioPublicacion;
+
+    libro->autor.anioNacimiento = anioNacimiento;
+}
 
 /*
 Ejercicio 7: Lista enlazada de números
@@ -124,4 +187,32 @@ typedef struct nodo {
   struct nodo *siguiente; // puntero al siguiente nodo
 } Nodo;
 
-Nodo *crearListaEnlazada(int arr[], int size) { return NULL; }
+Nodo *crearListaEnlazada(int arr[], int size) {
+    Nodo *head = NULL;
+    Nodo *prev = NULL;
+
+    for (int i = 0; i < size; i++) {
+        Nodo *nuevoNodo = (Nodo *)malloc(sizeof(Nodo));
+        if (nuevoNodo == NULL) {
+            Nodo *temp = head;
+            while (temp != NULL) {
+                Nodo *borrar = temp;
+                temp = temp->siguiente;
+                free(borrar);
+            }
+            return NULL;
+        }
+
+        nuevoNodo->numero = arr[i];
+        nuevoNodo->siguiente = NULL;
+
+        if (prev == NULL) {
+            head = nuevoNodo;
+        }
+        else{
+            prev->siguiente = nuevoNodo;
+        }
+        prev = nuevoNodo;
+    }
+    return head;
+}
