@@ -1,1 +1,12 @@
 
+Sun 17 Mar 2024 02:48:51 AM UTC: 
+ exercises.c | 1 -
+ 1 file changed, 1 deletion(-)
+In file included from test.c:1:
+exercises.c: In function ‘filterEvenNumbers’:
+exercises.c:62:13: error: ‘result’ undeclared (first use in this function)
+   62 |             result[j] = arr[i];
+      |             ^~~~~~
+exercises.c:62:13: note: each undeclared identifier is reported only once for each function it appears in
+Compilation failed
+aa69b7f
